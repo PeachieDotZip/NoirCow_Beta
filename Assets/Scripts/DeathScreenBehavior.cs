@@ -12,13 +12,6 @@ using UnityEngine.SceneManagement;
 
 public class DeathScreenBehavior : MonoBehaviour
 {
-    public GameObject restartButton;
-    public GameObject exitButton;
-    public GameObject mainMenu;
-    public GameObject backButton;
-    public GameObject controlText;
-    public GameObject howToPlayButton;
-
     /// <summary>
     /// Quits the game
     /// </summary>
@@ -41,27 +34,5 @@ public class DeathScreenBehavior : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void howToPlay()
-    {
-        restartButton.SetActive(false);
-        exitButton.SetActive(false);
-        mainMenu.SetActive(false);
-        howToPlayButton.SetActive(false);
-
-        backButton.SetActive(true);
-        controlText.SetActive(true);
-    }
-
-    public void back()
-    {
-        restartButton.SetActive(true);
-        exitButton.SetActive(true);
-        mainMenu.SetActive(true);
-        howToPlayButton.SetActive(true);
-
-        backButton.SetActive(false);
-        controlText.SetActive(false);
     }
 }
