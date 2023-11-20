@@ -12,17 +12,19 @@ using UnityEngine;
 public class ObjectBehaviour : MonoBehaviour
 {
     private UmbrellaBehaviour umbrella;
-    private Animation anim;
+    private Animator anim;
     private ParticleSystem dust;
     public bool doesGiveHiddenObject;
     public GameObject hiddenObject;
+    private AudioSource inspectSFX;
 
     // Start is called before the first frame update
     void Start()
     {
         umbrella = FindObjectOfType<UmbrellaBehaviour>();
-        anim = GetComponent<Animation>();
+        anim = GetComponent<Animator>();
         dust = GetComponentInChildren<ParticleSystem>();
+        inspectSFX = GetComponent<AudioSource>();
 
         if (doesGiveHiddenObject == false)
         {
@@ -42,9 +44,10 @@ public class ObjectBehaviour : MonoBehaviour
             if (umbrella.isPoking == true)
             {
                 Debug.Log("object poked");
-                anim.Play();
+                anim.SetTrigger("open");
                 dust.Play();
-                if (doesGiveHiddenObject == true)
+                inspectSFX.Play();
+                if (doesGiveHiddenObject == true && hiddenObject != null)
                 {
                     hiddenObject.SetActive(true);
                 }

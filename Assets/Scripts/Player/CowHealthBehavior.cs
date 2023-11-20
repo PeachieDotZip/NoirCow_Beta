@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Runtime.Serialization;
 
 public class CowHealthBehavior : MonoBehaviour
 {
@@ -19,7 +20,10 @@ public class CowHealthBehavior : MonoBehaviour
     public GameObject mainMenu;
     public UmbrellaBehaviour umbrella;
     public Animator cowAnim;
-    public TextMeshProUGUI livesText;
+    //public TextMeshProUGUI livesText;
+    private AudioSource damageSFX;
+    public AudioSource collectSFX;
+    private CowController cowController;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +32,8 @@ public class CowHealthBehavior : MonoBehaviour
         restartButton.SetActive(false);
         exitButton.SetActive(false);
         mainMenu.SetActive(false);
+        damageSFX = GetComponent<AudioSource>();
+        cowController = GetComponent<CowController>();
     }
 
     // Update is called once per frame
@@ -35,17 +41,19 @@ public class CowHealthBehavior : MonoBehaviour
     {
         if (playerLives > 0)
         {
-            livesText.text = "Lives : " + playerLives.ToString();
+            //livesText.text = "Lives : " + playerLives.ToString();
         }      
         else 
         {
             restartButton.SetActive(true);
             exitButton.SetActive(true);
             mainMenu.SetActive(true);
+            cowController.isDead = true;
 
-            Destroy(gameObject);
-
-            livesText.text = "Lives : 0";
+        }
+        if (playerLives > 3)
+        {
+            playerLives = 3;
         }
     }
 
@@ -54,6 +62,10 @@ public class CowHealthBehavior : MonoBehaviour
         if (collision.CompareTag("Bullet") && umbrella.isBashing == false)
         {
             TakeDamage(1);
+        }
+        if (collision.CompareTag("Key"))
+        {
+            collectSFX.Play();
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -68,6 +80,7 @@ public class CowHealthBehavior : MonoBehaviour
     {
         if (isInvulnerable == false)
         {
+            damageSFX.Play();
             cowAnim.SetTrigger("hurt");
             playerLives -= damageAmount;
             Debug.Log("Cow Noir took damage!");

@@ -25,6 +25,7 @@ public class DebugBulletBehavior : MonoBehaviour
     CowController target;
     Vector2 moveDirection;
     private bool knockback;
+    public bool followPlayer;
 
     /// <summary>
     /// Grabs umbrella script
@@ -39,8 +40,11 @@ public class DebugBulletBehavior : MonoBehaviour
         ricochetSFX = GetComponent<AudioSource>();
         rb2d = GetComponent<Rigidbody2D>();
         target = FindObjectOfType<CowController>();
-        moveDirection = (target.transform.position - transform.position).normalized * shootSpeed;
-        rb2d.velocity = new Vector2(moveDirection.x, moveDirection.y);
+        if (followPlayer)
+        {
+            moveDirection = (target.transform.position - transform.position).normalized * shootSpeed;
+            rb2d.velocity = new Vector2(moveDirection.x, moveDirection.y);
+        }
     }
     /// <summary>
     /// Handles the timer. If bullets stick around for too long, they get deleted to save memory.
@@ -127,9 +131,9 @@ public class DebugBulletBehavior : MonoBehaviour
         Debug.Log("Bullet Ricocheted!");
         //Instantiate(ricochetEffect, gameObject.transform.position, Quaternion.identity);
         bulletCollider.enabled = false;
-        float randomPitch = Random.Range(.5f, 1.5f);
-        ricochetSFX.pitch = randomPitch;
-        ricochetSFX.Play();
+        float randomPitch = Random.Range(.90f, 1.10f);
+        umbrella.ricochetSFX.pitch = randomPitch;
+        umbrella.ricochetSFX.Play();
         float randomFloat = Random.Range(-88f, 88f);
         Debug.Log(randomFloat);
         Quaternion umbrellaRot = umbrella.gameObject.transform.rotation;
@@ -150,9 +154,9 @@ public class DebugBulletBehavior : MonoBehaviour
     {
         Debug.Log("Gray Bullet Ricocheted!");
         //Instantiate(ricochetEffect, gameObject.transform.position, Quaternion.identity);
-        float randomPitch = Random.Range(.45f, 1.45f);
-        ricochetSFX.pitch = randomPitch;
-        ricochetSFX.Play();
+        float randomPitch = Random.Range(.85f, 1.05f);
+        umbrella.ricochetSFX.pitch = randomPitch;
+        umbrella.ricochetSFX.Play();
         bulletCollider.enabled = false;
         float randomFloat = Random.Range(-88f, 88f);
         Debug.Log(randomFloat);

@@ -45,7 +45,11 @@ public class CanvasScript : MonoBehaviour
     /// </summary>
     public void RespawnPlayer()
     {
-        FindObjectOfType<CowHealthBehavior>().playerLives = 3;
+        CowHealthBehavior cowHealth = FindObjectOfType<CowHealthBehavior>();
+        if (cowHealth.playerLives < 3)
+        {
+            cowHealth.playerLives = 3;
+        }
         gameManager.playerPos.position = barTelepoint.position;
         Camera.main.orthographicSize = 17.2f;
         Camera.main.transform.position = barTelepoint.position;

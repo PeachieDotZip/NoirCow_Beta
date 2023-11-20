@@ -19,6 +19,8 @@ public class RangedEnemyBehavior : MonoBehaviour
     public GameObject bulletPrefab;
     public float shootTimer;
     public bool isShooting;
+    private AudioSource hurtSFX;
+    public AudioSource shootSFX;
 
     public float enemyHealth = 3;
 
@@ -32,6 +34,7 @@ public class RangedEnemyBehavior : MonoBehaviour
         isShooting = false;
         player = FindObjectOfType<CowController>();
         anim = GetComponent<Animator>();
+        hurtSFX = GetComponent<AudioSource>();
     }
 
     /// <summary>
@@ -52,7 +55,7 @@ public class RangedEnemyBehavior : MonoBehaviour
         if (enemyHealth <= 0)
         {
             //instantiate death vfx
-            Destroy(gameObject);
+            anim.SetBool("isDead", true);
         }
     }
 
@@ -68,12 +71,17 @@ public class RangedEnemyBehavior : MonoBehaviour
         anim.ResetTrigger("shoot");
         isShooting = false;
     }
+    public void PlayShootSFX()
+    {
+        shootSFX.pitch = Random.Range(0.85f, 1.15f);
+        shootSFX.Play();
+    }
 
     public void TakeDamage(float damageAmount)
     {
         anim.SetTrigger("hurt");
+        hurtSFX.Play();
         enemyHealth -= damageAmount;
-        //playhurtanim
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -87,7 +95,10 @@ public class RangedEnemyBehavior : MonoBehaviour
             TakeDamage(3);
         }
     }
-    
+    public void DestroyEnemy()
+    {
+        Destroy(gameObject);
+    }
     public void Fire()
     {
         Instantiate(bulletPrefab, shootPos.position, transform.rotation);

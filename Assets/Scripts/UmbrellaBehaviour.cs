@@ -20,6 +20,8 @@ public class UmbrellaBehaviour : MonoBehaviour
     public AudioSource openSFX;
     public AudioSource closeSFX;
     public AudioSource bashSwingSFX;
+    public AudioSource ricochetSFX;
+    public bool checkpoint;
 
     private void Awake()
     {
@@ -91,9 +93,11 @@ public class UmbrellaBehaviour : MonoBehaviour
 
     private IEnumerator TakeUmbrella()
     {
-        closeSFX.Play();
         yield return new WaitForSeconds(0.21f);
-        gameObject.SetActive(false);
+        if (!checkpoint)
+        {
+            gameObject.SetActive(false);
+        }
     }
     // The following functions are used within animation events to control certain variables and interactions.
 

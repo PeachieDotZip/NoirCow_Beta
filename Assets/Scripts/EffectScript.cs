@@ -13,14 +13,33 @@ using UnityEngine;
 public class EffectScript : MonoBehaviour
 {
     public float effectTime = 1f;
-    public GameManager gameManager;
-
+    private GameManager gameManager;
+    public int effectID;
+    private AudioSource bashSFX;
 
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        bashSFX = GetComponent<AudioSource>();
     }
-
+    public void BashSound()
+    {
+        switch (effectID)
+        {
+            case 0:
+                bashSFX.pitch = Random.Range(0.95f, 1.15f);
+                bashSFX.Play();
+                break;
+            case 1:
+                bashSFX.Play();
+                break;
+            case 2:
+                Debug.Log("boss pop lol");
+                break;
+            default:
+                break;
+        }
+    }
     /// <summary>
     /// Used for slowdown effect while in animation.
     /// </summary>

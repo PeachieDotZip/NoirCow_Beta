@@ -14,6 +14,7 @@ TagManager:
   - Crate
   - Enemy_Charging
   - Player_Invuln
+  - Key
   layers:
   - Default
   - TransparentFX

@@ -14,6 +14,7 @@ public class KeyBehaviour : MonoBehaviour
     private Animator anim;
     private GameManager gameManager;
     public GameObject collectEffect;
+    public bool inMainBar;
 
     // Start is called before the first frame update
     void Start()
@@ -36,8 +37,8 @@ public class KeyBehaviour : MonoBehaviour
     /// </summary>
     public void CollectKey()
     {
-        Instantiate(collectEffect, gameObject.transform.position, Quaternion.identity);
         gameManager.keyAmount += 1;
+        Instantiate(collectEffect, gameObject.transform.position, Quaternion.identity);
     }
 
     /// <summary>
@@ -45,7 +46,10 @@ public class KeyBehaviour : MonoBehaviour
     /// </summary>
     public void DestroySelf()
     {
-        gameManager.canvasAnim.SetTrigger("down");
+        if (!inMainBar)
+        {
+            gameManager.canvasAnim.SetTrigger("down");
+        }
         gameManager.CheckKeyAmount();
         Destroy(gameObject);
     }

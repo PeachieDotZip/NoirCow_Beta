@@ -16,15 +16,12 @@ public class KeyUIBehavior : MonoBehaviour
     public GameObject KeyTwo;
     public GameObject KeyThree;
 
-    public int key;
-
     public GameObject heartOne;
     public GameObject heartTwo;
     public GameObject heartThree;
 
-    public int playerLives;
-
-    //private GameManager gameManager;
+    private GameManager gameManager;
+    private CowHealthBehavior cowHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -36,45 +33,47 @@ public class KeyUIBehavior : MonoBehaviour
         heartOne.SetActive(true);
         heartTwo.SetActive(true);
         heartThree.SetActive(true);
-        playerLives = 3;
+        gameManager = FindObjectOfType<GameManager>();
+        cowHealth = FindObjectOfType<CowHealthBehavior>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (key == 1)//gameManager.keyAmount == 1)
+        if (gameManager.keyAmount == 1)
         {
             KeyOne.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
         }
-        else if (key == 2)//gameManager.keyAmount == 2)
+        else if (gameManager.keyAmount == 2)
         {
             KeyTwo.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
         }
-        else if (key == 3)//gameManager.keyAmount == 3)
+        else if (gameManager.keyAmount == 3)
         {
             KeyThree.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
         }
 
 
-        if (playerLives == 3)
+        if (cowHealth.playerLives == 3)
         {
             heartOne.SetActive(true);
             heartTwo.SetActive(true);
             heartThree.SetActive(true);
         }
-        else if (playerLives == 2)
+        else if (cowHealth.playerLives == 2)
         {
+            Debug.Log("goober");
             heartOne.SetActive(true);
             heartTwo.SetActive(true);
             heartThree.SetActive(false);
         }
-        else if (playerLives == 1)
+        else if (cowHealth.playerLives == 1)
         {
             heartOne.SetActive(true);
             heartTwo.SetActive(false);
             heartThree.SetActive(false);
         }
-        else if (playerLives == 0)
+        else if (cowHealth.playerLives == 0)
         {
             heartOne.SetActive(false);
             heartTwo.SetActive(false);

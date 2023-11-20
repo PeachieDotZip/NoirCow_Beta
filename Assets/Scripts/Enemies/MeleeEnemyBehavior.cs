@@ -24,11 +24,13 @@ public class MeleeEnemyBehavior : MonoBehaviour
     public float enemyHealth = 3;
 
     private UmbrellaBehaviour umbrella;
-
+    private AudioSource hurtSFX;
 
     private Animator anim;
     public GameObject bashedEffect;
     public GameObject deathEffect;
+    public AudioSource dazedSFX;
+    public AudioSource dazedEndSFX;
 
 
     private void Start()
@@ -37,7 +39,7 @@ public class MeleeEnemyBehavior : MonoBehaviour
         canCharge = true;
         isCharging = false;
         umbrella = FindObjectOfType<UmbrellaBehaviour>();
-
+        hurtSFX = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
     }
 
@@ -63,7 +65,9 @@ public class MeleeEnemyBehavior : MonoBehaviour
         if (enemyHealth <= 0)
         {
             //instantiate death vfx
-            Destroy(gameObject);
+            anim.SetBool("isDead", true);
+            rb2d.velocity = new Vector2(0, 0);
+            dazedSFX.Stop();
         }
         if (isCharging)
         {
@@ -82,6 +86,7 @@ public class MeleeEnemyBehavior : MonoBehaviour
     public void TakeDamage(float damageAmount)
     {
         anim.SetTrigger("hurt");
+        hurtSFX.Play();
         enemyHealth -= damageAmount;
     }
 
@@ -96,11 +101,16 @@ public class MeleeEnemyBehavior : MonoBehaviour
 
     private void HitWall()
     {
+        dazedSFX.Play();
         gameObject.tag = "Enemy";
         anim.SetBool("isDazed", true);
         isCharging = false;
         canCharge = false;
         rb2d.velocity = new Vector2 (0, 0);
+    }
+    public void DestroyEnemy()
+    {
+        Destroy(gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -182,6 +192,11 @@ public class MeleeEnemyBehavior : MonoBehaviour
 
     // the following functions are called within animation events
     
+    public void PlayEndDazeSFX()
+    {
+        dazedEndSFX.Play();
+        dazedSFX.Stop();
+    }
     public void Charge()
     {
         isCharging = true;

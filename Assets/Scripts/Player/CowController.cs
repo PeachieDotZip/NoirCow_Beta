@@ -5,7 +5,6 @@
 //
 // Brief Description : Controls all variables and interactions the player can have.
 *****************************************************************************/
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +25,8 @@ public class CowController : MonoBehaviour
     public GameObject mainMenu;
     public GameObject howToPlay;
     private bool isPaused;
+    public bool isDead;
+    public GameObject legs;
 
 
     /// <summary>
@@ -48,16 +49,18 @@ public class CowController : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        rb.velocity = movementInput * speed;
+        if (!isDead)
+        {
+            rb.velocity = movementInput * speed;
+        }
     }
 
 
     /// <summary>
-    /// Debug prototype code, remove whenever
+    /// controls pause menu and player movement sounds
     /// </summary>
     private void Update()
     {
-
         if (cowActions.Player.Pause.triggered && isPaused == false)
         {
             Time.timeScale = 0f;
@@ -78,6 +81,14 @@ public class CowController : MonoBehaviour
             mainMenu.SetActive(false);
             howToPlay.SetActive(false);
         }
+        if (rb.velocity.magnitude > 0)
+        {
+            legs.SetActive(true);
+        }
+        else
+        {
+            legs.SetActive(false);
+        }
     }
 
 
@@ -89,7 +100,6 @@ public class CowController : MonoBehaviour
     {
         movementInput = inputValue.Get<Vector2>();
     }
-
 
     private void OnEnable()
     {

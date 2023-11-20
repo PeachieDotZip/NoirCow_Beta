@@ -15,6 +15,15 @@ EditorBuildSettings:
     path: Assets/Scenes/First Playable Scene.unity
     guid: e7fbfc9f2ff9447ff8afbfaa9c3049ec
   - enabled: 1
+    path: Assets/Scenes/Checkpoint1.unity
+    guid: 77544608a6f039a40b7b6dd6300d30bd
+  - enabled: 1
+    path: Assets/Scenes/Checkpoint2.unity
+    guid: e0ff3bd4df1192946981abcbd72f4ab0
+  - enabled: 1
+    path: Assets/Scenes/Checkpoint3.unity
+    guid: 8d2e4fdc525107a49af5c326a2841954
+  - enabled: 0
     path: Assets/Scenes/PrototypeScene.unity
     guid: eadfd69d6999a8e468fa72b9cdd5c3b3
   m_configObjects:

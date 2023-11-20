@@ -13,6 +13,8 @@ public class HealScript : MonoBehaviour
 {
     private CowHealthBehavior cowHealth;
     private Animator anim;
+    public AudioSource healSFX;
+    public AudioSource grabSFX;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +28,7 @@ public class HealScript : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             anim.SetTrigger("touched");
+            healSFX.Play();
         }
     }
     public void HealPlayer()

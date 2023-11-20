@@ -15,10 +15,15 @@ public class GameManager : MonoBehaviour
     public Animator canvasAnim;
     public int keyAmount;
     public GameObject[] endgameObjects;
+    public AudioSource bgMusic;
+    public GameObject bossMusic;
 
 
-
-
+    private void Awake()
+    {
+        Time.timeScale = 1.0f;
+        bgMusic = GetComponent<AudioSource>();
+    }
 
     public void CheckKeyAmount()
     {

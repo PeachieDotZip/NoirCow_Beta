@@ -12,6 +12,7 @@ using UnityEngine.SceneManagement;
 
 public class DeathScreenBehavior : MonoBehaviour
 {
+    public GameManager gameManager;
     /// <summary>
     /// Quits the game
     /// </summary>
@@ -33,6 +34,23 @@ public class DeathScreenBehavior : MonoBehaviour
     /// </summary>
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        switch (gameManager.keyAmount)
+        {
+            case 0:
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                break;
+            case 1:
+                SceneManager.LoadScene("Checkpoint1");
+                break;
+            case 2:
+                SceneManager.LoadScene("Checkpoint2");
+                break;
+            case 3:
+                SceneManager.LoadScene("Checkpoint3");
+                break;
+            default:
+                Debug.Log("Invalid amount of keys!!!");
+                break;
+        }
     }
 }
