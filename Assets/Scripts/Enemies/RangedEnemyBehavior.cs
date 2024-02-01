@@ -26,6 +26,8 @@ public class RangedEnemyBehavior : MonoBehaviour
 
     private Animator anim;
 
+    private ScoreController score;
+
     /// <summary>
     /// Grabs the player and sets health
     /// </summary>
@@ -35,6 +37,8 @@ public class RangedEnemyBehavior : MonoBehaviour
         player = FindObjectOfType<CowController>();
         anim = GetComponent<Animator>();
         hurtSFX = GetComponent<AudioSource>();
+
+        score = GameObject.FindObjectOfType<ScoreController>();
     }
 
     /// <summary>
@@ -89,10 +93,12 @@ public class RangedEnemyBehavior : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet_Ricochet") || (collision.gameObject.CompareTag("Bullet")))
         {
             TakeDamage(1);
+            score.AddScore(25);
         }
         if (collision.gameObject.CompareTag("Bullet_Bash"))
         {
             TakeDamage(3);
+            score.AddScore(100);
         }
     }
     public void DestroyEnemy()
