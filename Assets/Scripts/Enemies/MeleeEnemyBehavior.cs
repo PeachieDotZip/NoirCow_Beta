@@ -32,8 +32,6 @@ public class MeleeEnemyBehavior : MonoBehaviour
     public AudioSource dazedSFX;
     public AudioSource dazedEndSFX;
 
-    private ScoreController score;
-
 
     private void Start()
     {
@@ -43,8 +41,6 @@ public class MeleeEnemyBehavior : MonoBehaviour
         umbrella = FindObjectOfType<UmbrellaBehaviour>();
         hurtSFX = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
-
-        score = GameObject.FindObjectOfType<ScoreController>();
     }
 
     void Update()
@@ -172,7 +168,6 @@ public class MeleeEnemyBehavior : MonoBehaviour
             if (isCharging == false && umbrella.isPoking == true)
             {
                 TakeDamage(1);
-                score.AddScore(50);
                 Instantiate(deathEffect, gameObject.transform.position, umbrella.gameObject.transform.rotation);
             }
         }

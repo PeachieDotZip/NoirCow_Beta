@@ -8,15 +8,20 @@ public class ScoreController : MonoBehaviour
     public float currentScore;
     public TextMeshProUGUI scoreUI;
 
+    private void Start()
+    {
+        currentScore = 1000;
+    }
+
     private void Update()
     {
         scoreUI.text = "Score : " + currentScore.ToString();
     }
 
-    public void AddScore (int scoreIncrease)
+    public void AddScore (int scoreDecrease)
     {
         Debug.Log(currentScore);
-        currentScore += scoreIncrease;
+        currentScore -= scoreDecrease;
     }
 
     

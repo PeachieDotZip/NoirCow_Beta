@@ -25,10 +25,16 @@ public class CowHealthBehavior : MonoBehaviour
     public AudioSource collectSFX;
     private CowController cowController;
 
+    //Score components
+    public float currentScore;
+    public TextMeshProUGUI scoreUI;
+
     // Start is called before the first frame update
     void Start()
     {
         playerLives = 3;
+        currentScore = 1000;
+
         restartButton.SetActive(false);
         exitButton.SetActive(false);
         mainMenu.SetActive(false);
@@ -39,6 +45,8 @@ public class CowHealthBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        scoreUI.text = "Score : " + currentScore.ToString();
+
         if (playerLives > 0)
         {
             //livesText.text = "Lives : " + playerLives.ToString();
@@ -55,13 +63,18 @@ public class CowHealthBehavior : MonoBehaviour
         {
             playerLives = 3;
         }
+
+        if(currentScore <= 100)
+        {
+            currentScore = 100;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Bullet") && umbrella.isBashing == false)
         {
-            TakeDamage(1);
+            TakeDamage(10);
         }
         if (collision.CompareTag("Key"))
         {
@@ -72,7 +85,7 @@ public class CowHealthBehavior : MonoBehaviour
     {
         if ((collision.collider.CompareTag("Enemy") || collision.collider.CompareTag("Enemy_Charging")) && umbrella.isBashing == false)
         {
-            TakeDamage(1);
+            TakeDamage(10);
         }
     }
 
@@ -82,7 +95,7 @@ public class CowHealthBehavior : MonoBehaviour
         {
             damageSFX.Play();
             cowAnim.SetTrigger("hurt");
-            playerLives -= damageAmount;
+            currentScore -= damageAmount;
             Debug.Log("Cow Noir took damage!");
         }
     }
